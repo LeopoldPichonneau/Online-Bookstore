@@ -1,0 +1,15 @@
+# Use an official Python runtime as the base image
+FROM python:3.11
+
+# Set the working directory in the container
+# Both the utils and src folders will be mounted as volumes, please see docker-compose.yaml
+WORKDIR /app
+
+# Copy the requirements file to the working directory
+COPY ./orchestrator/requirements.txt .
+
+# Install the Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Set the command to run the container
+CMD python -m grpc_tools.protoc -I utils/pb/fraud_detection --python_out=utils/pb/fraud_detection --pyi_out=utils/pb/fraud_detection --grpc_python_out=utils/pb/fraud_detection utils/pb/fraud_detection/fraud_detection.proto && python -m grpc_tools.protoc -I utils/pb/suggestions --python_out=utils/pb/suggestions --pyi_out=utils/pb/suggestions --grpc_python_out=utils/pb/suggestions utils/pb/suggestions/suggestions.proto && python -m grpc_tools.protoc -I utils/pb/transaction_verification --python_out=utils/pb/transaction_verification --pyi_out=utils/pb/transaction_verification --grpc_python_out=utils/pb/transaction_verification utils/pb/transaction_verification/transaction_verification.proto && python -m grpc_tools.protoc -I utils/pb/order_queue --python_out=utils/pb/order_queue --pyi_out=utils/pb/order_queue --grpc_python_out=utils/pb/order_queue utils/pb/order_queue/order_queue.proto && python -m grpc_tools.protoc -I utils/pb/books_database --python_out=utils/pb/books_database --pyi_out=utils/pb/books_database --grpc_python_out=utils/pb/books_database utils/pb/books_database/books_database.proto && python utils/other/hotreload.py "orchestrator/src/app.py"

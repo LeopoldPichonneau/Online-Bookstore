@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package transaction_verification;
+
+message BillingAddress {
+  string street = 1;
+  string city = 2;
+  string state = 3;
+  string zip = 4;
+  string country = 5;
+}
+
+message BookItem {
+  string name = 1;
+  int32 quantity = 2;
+}
+
+message VerificationRequest {
+  string name = 1;
+  string email = 2;
+  string card_number = 3;
+  string expiration_date = 4;
+  string cvv = 5;
+  BillingAddress billing_address = 6;
+  repeated BookItem items = 7;
+}
+
+message VerificationResponse {
+  bool is_valid = 1;
+  string message = 2;
+}
+
+message Empty {}
+
+service TransactionVerificationService {
+  rpc InitializeVerificationOrder (VerificationRequest) returns (VerificationResponse);
+  rpc StartVerificationFlow (Empty) returns (VerificationResponse);
+  rpc CheckItemsNotEmpty (Empty) returns (VerificationResponse);
+  rpc CheckMandatoryUserData (Empty) returns (VerificationResponse);
+  rpc CheckCardFormat (Empty) returns (VerificationResponse);
+  rpc ClearVerificationOrder (Empty) returns (VerificationResponse);
+}

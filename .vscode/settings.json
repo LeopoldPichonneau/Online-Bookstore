@@ -1,0 +1,11 @@
+{
+    "python.analysis.extraPaths": [
+        "./utils/pb/fraud_detection",
+        "./utils/pb/transaction_verification",
+        "./utils/pb/suggestions",
+        "./utils/pb/executor",
+        "./utils/pb/order_queue",
+        "./utils/pb/books_database",
+        "./utils/pb/payment",
+    ],
+}

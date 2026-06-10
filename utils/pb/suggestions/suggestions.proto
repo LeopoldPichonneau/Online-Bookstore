@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package suggestions;
+
+message BookItem {
+  string name = 1;
+  int32 quantity = 2;
+}
+
+message SuggestionsRequest {
+  repeated BookItem items = 1;
+}
+
+message SuggestedBook {
+  string bookId = 1;
+  string title = 2;
+  string author = 3;
+}
+
+message SuggestionsResponse {
+  repeated SuggestedBook books = 1;
+}
+
+message Empty {}
+
+service SuggestionsService {
+  rpc InitializeSuggestionsOrder (SuggestionsRequest) returns (SuggestionsResponse);
+  rpc GenerateSuggestions (Empty) returns (SuggestionsResponse);
+  rpc ClearSuggestionsOrder (Empty) returns (SuggestionsResponse);
+}
