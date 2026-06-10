@@ -375,3 +375,9 @@ docs/                         Documentation, project plans, and analysis notes
 - **2PC coordinator blocking window** — if the executor leader crashes between collecting votes and broadcasting the decision, the participants that voted YES remain staged until a coordinator returns. The prototype does not implement coordinator-side decision replication; see [docs/analysis/coordinator-failure.md](docs/analysis/coordinator-failure.md) for the mitigation design.
 - **Books DB commit replication** is best-effort per-title via absolute `Write(title, new_stock)` values, outside the primary's lock. A multi-title commit that crashes mid-replication can leave divergent backups with no automatic reconciliation — acceptable because only one executor leader drives 2PC at a time.
 - **Order status map** is in-memory and single-instance. Orchestrator restart loses outcome records for orders submitted before the restart; frontend polling will time out with the "still processing" fallback.
+
+## Contributors
+
+- [Léopold Pichonneau](https://github.com/LeopoldPichonneau)
+- [Andrius Matšenas](https://github.com/Matsenas)
+- [Renan Morais](https://github.com/renanmorais27)
