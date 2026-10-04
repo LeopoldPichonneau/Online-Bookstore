@@ -1,4 +1,28 @@
-# Distributed Bookstore System
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/assets/light/hero.svg">
+    <img src="docs/assets/hero.svg" alt="Distributed Bookstore — microservices checkout system" width="830" />
+  </picture>
+</p>
+
+## Table of contents
+
+1. [System Model](#system-model)
+2. [Architecture](#architecture)
+3. [Services](#services)
+4. [Checkout Flow](#checkout-flow)
+5. [System Diagram](#system-diagram)
+6. [Leader Election (Bully Algorithm)](#leader-election-bully-algorithm)
+7. [Consistency Protocol (Books DB)](#consistency-protocol-books-db)
+8. [Happy-Path 2PC Commit](#happy-path-2pc-commit)
+9. [Validation Rules](#validation-rules)
+10. [Fraud Detection Rules](#fraud-detection-rules)
+11. [How to Run](#how-to-run)
+12. [Project Structure](#project-structure)
+13. [Known Limitations](#known-limitations)
+14. [Contributors](#contributors)
+
+---
 
 Distributed Systems course project @ University of Tartu — an online bookstore checkout system built with a microservices architecture.
 
@@ -34,6 +58,15 @@ The following is a system model description using the concepts described in the 
 
 
 ## Architecture
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/assets/light/architecture.svg">
+    <img src="docs/assets/architecture.svg" alt="Architecture: frontend, orchestrator, gRPC services, executor replicas, payment and replicated books database" width="830" />
+  </picture>
+</p>
+
+Detailed view:
 
 ```mermaid
 graph TD
@@ -281,6 +314,13 @@ Fraud detection uses deterministic rules:
 
 ### Setting up Google AI API Key
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/assets/light/step-1.svg">
+    <img src="docs/assets/step-1.svg" alt="Step 1 of 4" width="700" />
+  </picture>
+</p>
+
 The suggestions service uses Google Gemma 3 27B for AI-generated book recommendations. You need a Google AI API key from [Google AI Studio](https://aistudio.google.com/apikey).
 
 **Option 1: Export in terminal**
@@ -299,9 +339,23 @@ If no API key is provided, suggestions fall back to a static book list.
 
 ### Running the Application
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/assets/light/step-2.svg">
+    <img src="docs/assets/step-2.svg" alt="Step 2 of 4" width="700" />
+  </picture>
+</p>
+
 ```bash
 docker compose up --build
 ```
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/assets/light/step-3.svg">
+    <img src="docs/assets/step-3.svg" alt="Step 3 of 4" width="700" />
+  </picture>
+</p>
 
 The frontend will be available at [http://localhost:8080](http://localhost:8080).
 The orchestrator API is available at [http://localhost:8081](http://localhost:8081).
@@ -310,6 +364,13 @@ Grafana is available at [http://localhost:3000](http://localhost:3000) with the 
 Code changes are hot-reloaded automatically — no restart needed during development.
 
 ### E2E Testing and Observability
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/assets/light/step-4.svg">
+    <img src="docs/assets/step-4.svg" alt="Step 4 of 4" width="700" />
+  </picture>
+</p>
 
 The stack includes `grafana/otel-lgtm` for local OpenTelemetry metrics and traces. Prometheus is used for metrics and Tempo for traces inside Grafana.
 
